@@ -1,0 +1,17 @@
+.navbar * {
+  margin: 0;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+}
+
+.user-panel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
