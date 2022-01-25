@@ -4,7 +4,7 @@ import { user } from './assets/dummy_data'
 import Login from './components/Login/Login'
 
 const App = () => {
-  if (user) return <Login />
+  if (!user) return <Login />
   return <Home />
 }
 

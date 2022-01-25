@@ -22,6 +22,11 @@
   background-color: var(--grey);
 }
 
+.author-name {
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
 .post-info {
   flex: 1;
 }
@@ -32,6 +37,23 @@
   font-weight: 400;
 }
 
+.options-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+}
+
 .post-text {
   font-weight: 400;
+}
+
+@media (max-width: 360px) {
+  .author-name {
+    max-width: 160px;
+  }
 }

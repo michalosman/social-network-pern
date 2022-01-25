@@ -16,10 +16,12 @@ const Posts = () => {
             alt="author avatar"
           />
           <div className="post-info">
-            <div>{post.author.name}</div>
+            <div className="author-name">{post.author.name}</div>
             <div className="time-info">{moment(post.createdAt).fromNow()}</div>
           </div>
-          <button>Options</button>
+          <button className="options-button">
+            <i className="fas fa-ellipsis-h"></i>
+          </button>
         </div>
         <div className="post-text">{post.text}</div>
       </div>

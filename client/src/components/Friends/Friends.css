@@ -50,6 +50,12 @@
   font-size: 20px;
 }
 
+@media (max-width: 680px) {
+  .aside {
+    margin: 0 auto;
+  }
+}
+
 .aside ::-webkit-scrollbar {
   width: 10px;
 }
