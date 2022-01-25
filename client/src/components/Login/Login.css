@@ -1,0 +1,36 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  height: 100vh;
+  max-width: 350px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  width: 100%;
+  background-color: var(--white);
+}
+
+.login-logo {
+  width: 50px;
+}
+
+.login-title {
+  margin-bottom: var(--spacing-sm);
+  font-size: 24px;
+  font-weight: inherit;
+}
+
+.login-input {
+  border-radius: var(--border-radius);
+}
+
+.toggle-button {
+  width: 100%;
+}

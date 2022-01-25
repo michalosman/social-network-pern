@@ -1,5 +1,54 @@
+/* Utils */
+
 .container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+/* Header */
+
+.header {
+  position: sticky;
+  top: 0;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.left-panel,
+.right-panel {
+  display: flex;
+  align-items: center;
+}
+
+.left-panel {
+  gap: var(--spacing-sm);
+}
+
+.right-panel {
+  gap: var(--spacing-md);
+}
+
+.logo {
+  width: 35px;
+}
+
+.page-name {
+  color: var(--primary);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Footer */
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
 }

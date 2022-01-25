@@ -8,7 +8,15 @@
   --grey: #f0eef1;
   --grey-hover: #d8d7db;
   --grey-active: #ccccd0;
+  --border-radius: 8px;
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
+
 *,
 *::before,
 *::after {
@@ -20,9 +28,15 @@ html {
   min-height: 100%;
 }
 
+h1,
+p {
+  margin: 0;
+}
+
 body {
+  margin-bottom: 50px;
   background-color: var(--grey);
-  color: var(--font-light);
+  color: var(--font-dark);
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
 }
@@ -32,20 +46,36 @@ input {
   border: none;
   color: inherit;
   font-weight: inherit;
+}
+
+button {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  background-color: var(--grey);
   cursor: pointer;
 }
 
-.button {
-  padding: 10px 15px;
-  border-radius: 7px;
-  background-color: var(--grey);
-}
-
-.button:hover {
+button:hover {
   background-color: var(--grey-hover);
 }
 
-.button:active {
+button:active {
   background-color: var(--grey-active);
   transform: scale(0.98);
+}
+
+input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 50px;
+  background-color: var(--grey);
+  font-weight: 400;
+  outline: none;
+}
+
+.box {
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  background-color: var(--white);
+  box-shadow: var(--shadow);
 }

@@ -1,0 +1,37 @@
+.posts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.post-form {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.post-panel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.avatar {
+  width: 40px;
+  border-radius: 50px;
+  background-color: var(--grey);
+}
+
+.post-info {
+  flex: 1;
+}
+
+.time-info {
+  margin-top: 3px;
+  color: var(--font-light);
+  font-weight: 400;
+}
+
+.post-text {
+  font-weight: 400;
+}

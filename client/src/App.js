@@ -1,16 +1,11 @@
 import React from 'react'
-import Navbar from './components/Navbar/Navbar'
 import Home from './components/Home/Home'
-import Footer from './components/Footer/Footer'
+import { user } from './assets/dummy_data'
+import Login from './components/Login/Login'
 
 const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <Home />
-      <Footer />
-    </div>
-  )
+  if (user) return <Login />
+  return <Home />
 }
 
 export default App

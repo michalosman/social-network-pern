@@ -1,0 +1,70 @@
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  min-width: 300px;
+}
+
+.box-title {
+  margin-bottom: var(--spacing-md);
+  color: var(--primary);
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.input {
+  margin-bottom: var(--spacing-md);
+}
+
+.scroll {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
+  padding-right: var(--spacing-sm);
+  overflow-x: hidden;
+}
+
+.user-name {
+  max-width: 165px;
+  word-wrap: break-word;
+}
+
+.button-group {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.user-button {
+  padding: 4px;
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+}
+
+.aside ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.aside ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.aside ::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  width: 10px;
+  min-height: 60px;
+  background-color: var(--grey);
+}
+
+.aside ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grey-hover);
+}
