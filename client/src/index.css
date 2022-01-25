@@ -1,13 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 :root {
-  --primary-dark: #222;
-  --secondary-dark: #333;
-  --primary-light: #fefefe;
-  --secondary-light: #ededed;
-  --button: #666;
-  --button-hover: #555;
-  --button-active: #444;
+  --primary: #4267b2;
+  --font-dark: #050505;
+  --font-light: #606164;
+  --white: #fffbfb;
+  --grey: #f0eef1;
+  --grey-hover: #d8d7db;
+  --grey-active: #ccccd0;
 }
 *,
 *::before,
@@ -21,26 +21,31 @@ html {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  background-color: var(--grey);
+  color: var(--font-light);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
 
 button,
 input {
   border: none;
   color: inherit;
+  font-weight: inherit;
   cursor: pointer;
 }
 
 .button {
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: var(--button);
+  padding: 10px 15px;
+  border-radius: 7px;
+  background-color: var(--grey);
 }
 
 .button:hover {
-  background-color: var(--button-hover);
+  background-color: var(--grey-hover);
 }
 
 .button:active {
-  background-color: var(--button-active);
+  background-color: var(--grey-active);
+  transform: scale(0.98);
 }
