@@ -4,18 +4,7 @@ import { Post } from '../models/Post'
 import { Comment } from '../models/Comment'
 import 'express-async-errors'
 import { getRepository } from 'typeorm'
-
-const removeSensitiveData = (data: any) => {
-  return {
-    ...data,
-    author: {
-      id: data.author.id,
-      email: data.author.email,
-      firstName: data.author.firstName,
-      lastName: data.author.lastName,
-    },
-  }
-}
+import { removeSensitiveDataPost } from '../utils/functions'
 
 export const createPost = async (req: Request, res: Response) => {
   const { text } = req.body
@@ -28,7 +17,7 @@ export const createPost = async (req: Request, res: Response) => {
   newPost.text = text
   await newPost.save()
 
-  const newPostData = removeSensitiveData(newPost)
+  const newPostData = removeSensitiveDataPost(newPost)
 
   return res.status(200).json(newPostData)
 }
@@ -39,7 +28,7 @@ export const getPosts = async (req: Request, res: Response) => {
     .innerJoinAndSelect('posts.author', 'author')
     .getMany()
 
-  const postsData = posts.map((post) => removeSensitiveData(post))
+  const postsData = posts.map((post) => removeSensitiveDataPost(post))
 
   return res.status(200).json(postsData)
 }
@@ -61,7 +50,7 @@ export const addComment = async (req: Request, res: Response) => {
   newComment.post = post
   await newComment.save()
 
-  const newCommentData = removeSensitiveData(newComment)
+  const newCommentData = removeSensitiveDataPost(newComment)
 
   return res.status(200).json(newCommentData)
 }
