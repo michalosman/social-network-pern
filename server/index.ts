@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import errorHandler from './error/errorHandler'
 import dotenv from 'dotenv'
+import connectToDB from './db'
 
 dotenv.config()
 
@@ -18,3 +19,5 @@ app.use(errorHandler)
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`)
 })
+
+connectToDB()
