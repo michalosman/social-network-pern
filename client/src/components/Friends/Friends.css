@@ -56,6 +56,12 @@
   }
 }
 
+@media (max-width: 360px) {
+  .aside {
+    min-width: 250px;
+  }
+}
+
 .aside ::-webkit-scrollbar {
   width: 10px;
 }

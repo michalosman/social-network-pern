@@ -14,8 +14,8 @@ router.use(auth)
 
 router.get('/', getPosts)
 router.post('/', createPost)
-router.post('/:postId/add-comment', addComment)
-router.put('/:postId/like', likePost)
-router.put('/:postId/unlike', unlikePost)
+router.post('/add-comment/:postId', addComment)
+router.put('/like/:postId', likePost)
+router.put('/unlike/:postId', unlikePost)
 
 export default router

@@ -41,7 +41,6 @@ const Home = () => {
           <div className="left-panel">
             <img className="logo" src={logo} alt="logo" />
             <h1 className="page-name">Social Network</h1>
-            <h1 className="page-name-mobile">SN</h1>
           </div>
           <div className="right-panel">
             <p>{user.name}</p>

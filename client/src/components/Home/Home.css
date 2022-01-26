@@ -42,13 +42,6 @@
   font-weight: 600;
 }
 
-.page-name-mobile {
-  display: none;
-  color: var(--primary);
-  font-size: 24px;
-  font-weight: 600;
-}
-
 .mobile-menu {
   display: none;
   gap: var(--spacing-sm);
@@ -81,10 +74,7 @@
 
 @media (max-width: 420px) {
   .page-name {
-    display: none;
-  }
-
-  .page-name-mobile {
-    display: block;
+    font-size: 16px;
+    max-width: 100px;
   }
 }

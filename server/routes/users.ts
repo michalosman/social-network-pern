@@ -12,9 +12,9 @@ import { auth, authModerator, authAdmin } from '../middleware/auth'
 const router = express.Router()
 
 router.get('/', auth, getUsers)
-router.post('/signUp', signUp)
-router.post('/signIn', signIn)
-router.post('/validateRole', auth, validateRole)
+router.post('/sign-up', signUp)
+router.post('/sign-in', signIn)
+router.post('/validate-role', auth, validateRole)
 router.put('/warn/:userId', auth, authModerator, warnUser)
 router.put('/block/:userId', auth, authAdmin, blockUser)
 
