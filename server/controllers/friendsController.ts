@@ -4,6 +4,72 @@ import 'express-async-errors'
 import { Request, Response } from 'express'
 import { getRepository } from 'typeorm'
 import { Friend } from '../models/Friend'
+import { removeSensitiveData } from '../utils/functions'
+
+export const getFriends = async (req: Request, res: Response) => {
+  const user = req.user
+
+  const friendships = await getRepository(Friend)
+    .createQueryBuilder('f')
+    .innerJoinAndSelect('f.sender', 'sender')
+    .innerJoinAndSelect('f.receiver', 'receiver')
+    .where(':userId IN (f.senderId, f.receiverId)', { userId: user.id })
+    .andWhere('f.isApproved = true')
+    .getMany()
+
+  const friends = friendships.map((friendship) =>
+    friendship.senderId === user.id
+      ? removeSensitiveData(friendship.receiver)
+      : removeSensitiveData(friendship.sender)
+  )
+
+  res.status(200).json(friends)
+}
+
+export const getRequests = async (req: Request, res: Response) => {
+  const user = req.user
+
+  const friendRequests = await getRepository(Friend)
+    .createQueryBuilder('f')
+    .innerJoinAndSelect('f.sender', 'sender')
+    .where(':userId = f.receiverId', { userId: user.id })
+    .andWhere('f.isApproved = false')
+    .getMany()
+
+  const requestsUsers = friendRequests.map((request) =>
+    removeSensitiveData(request.sender)
+  )
+
+  res.status(200).json(requestsUsers)
+}
+
+export const getNotFriends = async (req: Request, res: Response) => {
+  const user = req.user
+
+  const friendships = await getRepository(Friend)
+    .createQueryBuilder('f')
+    .innerJoinAndSelect('f.sender', 'sender')
+    .innerJoinAndSelect('f.receiver', 'receiver')
+    .where(':userId IN (f.senderId, f.receiverId)', { userId: user.id })
+    .andWhere('f.isApproved = true')
+    .getMany()
+
+  const friendsIds = friendships.map((friendship) =>
+    friendship.senderId === user.id
+      ? friendship.receiverId
+      : friendship.senderId
+  )
+
+  const notFriends = await getRepository(User)
+    .createQueryBuilder('users')
+    .where('users.id NOT IN (:...friendsIds)', { friendsIds })
+    .andWhere("users.role = 'user'")
+    .getMany()
+
+  const notFriendsData = notFriends.map((user) => removeSensitiveData(user))
+
+  res.status(200).json(notFriendsData)
+}
 
 export const createFriendRequest = async (req: Request, res: Response) => {
   const { receiverId } = req.params
