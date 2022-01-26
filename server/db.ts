@@ -2,8 +2,9 @@ import { User } from './models/User'
 import { Post } from './models/Post'
 import { Comment } from './models/Comment'
 import { createConnection } from 'typeorm'
-
+import { Friend } from './models/Friend'
 import dotenv from 'dotenv'
+
 dotenv.config()
 
 const connectToDB = async () => {
@@ -15,7 +16,7 @@ const connectToDB = async () => {
       username: process.env.PG_USERNAME,
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DATABASE,
-      entities: [User, Post, Comment],
+      entities: [User, Post, Friend, Comment],
       synchronize: true, //! remove in prod
     })
     console.log('Connected to PostgreSQL')

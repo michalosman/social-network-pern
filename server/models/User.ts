@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
+import { Friend } from './Friend'
 
 export enum UserRole {
   USER = 'user',
@@ -60,4 +61,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.author)
   comments: Comment[]
+
+  @OneToMany(() => Friend, (friendship) => friendship.sender)
+  friends: Friend[]
 }

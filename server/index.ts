@@ -3,6 +3,7 @@ import cors from 'cors'
 import errorHandler from './error/errorHandler'
 import usersRoutes from './routes/users'
 import postsRoutes from './routes/posts'
+import friendsRoutes from './routes/friends'
 import dotenv from 'dotenv'
 import connectToDB from './db'
 
@@ -18,6 +19,7 @@ app.use(cors())
 
 app.use('/users', usersRoutes)
 app.use('/posts', postsRoutes)
+app.use('/friends', friendsRoutes)
 
 app.use(errorHandler)
 
