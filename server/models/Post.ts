@@ -35,7 +35,7 @@ export class Post extends BaseEntity {
   @JoinTable({
     name: 'likes',
     joinColumn: {
-      name: 'chatId',
+      name: 'postId',
     },
     inverseJoinColumn: {
       name: 'userId',

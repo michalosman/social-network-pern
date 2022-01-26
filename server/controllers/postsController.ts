@@ -1,0 +1,113 @@
+import { Request, Response } from 'express'
+import ApiError from '../error/ApiError'
+import { Post } from '../models/Post'
+import { Comment } from '../models/Comment'
+import 'express-async-errors'
+import { getRepository } from 'typeorm'
+
+const removeSensitiveData = (data: any) => {
+  return {
+    ...data,
+    author: {
+      id: data.author.id,
+      email: data.author.email,
+      firstName: data.author.firstName,
+      lastName: data.author.lastName,
+    },
+  }
+}
+
+export const createPost = async (req: Request, res: Response) => {
+  const { text } = req.body
+  const user = req.user
+
+  if (!text) throw ApiError.badRequest('Request data incomplete')
+
+  const newPost = new Post()
+  newPost.author = user
+  newPost.text = text
+  await newPost.save()
+
+  const newPostData = removeSensitiveData(newPost)
+
+  return res.status(200).json(newPostData)
+}
+
+export const getPosts = async (req: Request, res: Response) => {
+  const posts = await getRepository(Post)
+    .createQueryBuilder('posts')
+    .innerJoinAndSelect('posts.author', 'author')
+    .getMany()
+
+  const postsData = posts.map((post) => removeSensitiveData(post))
+
+  return res.status(200).json(postsData)
+}
+
+export const addComment = async (req: Request, res: Response) => {
+  const { text } = req.body
+  const { postId } = req.params
+  const user = req.user
+
+  if (!text) throw ApiError.badRequest('Request data incomplete')
+  if (!parseInt(postId)) throw ApiError.badRequest('Invalid post id')
+
+  const post = await Post.findOne(postId)
+  if (!post) throw ApiError.notFound('Post not found')
+
+  const newComment = new Comment()
+  newComment.author = user
+  newComment.text = text
+  newComment.post = post
+  await newComment.save()
+
+  const newCommentData = removeSensitiveData(newComment)
+
+  return res.status(200).json(newCommentData)
+}
+
+export const likePost = async (req: Request, res: Response) => {
+  const { postId } = req.params
+  const user = req.user
+
+  if (!parseInt(postId)) throw ApiError.badRequest('Invalid post id')
+
+  const post = await getRepository(Post)
+    .createQueryBuilder('posts')
+    .leftJoinAndSelect('posts.likes', 'likes')
+    .where('posts.id = :postId', { postId })
+    .getOne()
+
+  if (!post) throw ApiError.notFound('Post not found')
+
+  const alreadyLiked = post.likes.find((likeUser) => likeUser.id === user.id)
+  if (alreadyLiked) throw ApiError.methodNotAllowed('Post already liked')
+
+  post.likes = [...post.likes, user]
+  await post.save()
+
+  return res.status(200).json({ likes: post.likes.length })
+}
+
+export const unlikePost = async (req: Request, res: Response) => {
+  const { postId } = req.params
+  const user = req.user
+
+  if (!parseInt(postId)) throw ApiError.badRequest('Invalid post id')
+
+  const post = await getRepository(Post)
+    .createQueryBuilder('posts')
+    .leftJoinAndSelect('posts.likes', 'likes')
+    .where('posts.id = :postId', { postId })
+    .getOne()
+
+  if (!post) throw ApiError.notFound('Post not found')
+
+  const alreadyLiked = post.likes.find((likeUser) => likeUser.id === user.id)
+  if (!alreadyLiked) throw ApiError.methodNotAllowed('Post not liked')
+
+  post.likes = post.likes.filter((likeUser) => likeUser.id !== user.id)
+  await post.save()
+
+  return res.status(200).json({ likes: post.likes.length })
+}
