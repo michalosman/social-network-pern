@@ -1,38 +1,84 @@
 import './Friends.css'
-import SearchBox from './SearchBox'
+import NotFriendBox from './NotFriendBox'
 import RequestBox from './RequestBox'
 import FriendBox from './FriendBox'
-import { users } from '../../assets/dummy_data'
-import { requests } from '../../assets/dummy_data'
-import { friends } from '../../assets/dummy_data'
-
+import { useEffect, useState } from 'react'
+import * as api from '../../api'
 const Friends = () => {
-  const searchBoxes = users.map((user) => (
-    <SearchBox key={user.id} user={user} />
-  ))
+  const [friends, setFriends] = useState([])
+  const [notFriends, setNotFriends] = useState([])
+  const [friendRequests, setFriendRequests] = useState([])
 
-  const requestBoxes = requests.map((user) => (
-    <RequestBox key={user.id} user={user} />
-  ))
+  useEffect(() => {
+    fetchFriends()
+    fetchNotFriends()
+    fetchFriendRequests()
+  }, [])
+
+  const fetchFriends = async () => {
+    const { data: friends } = await api.getFriends()
+    setFriends(friends)
+  }
+
+  const fetchNotFriends = async () => {
+    const { data: notFriends } = await api.getNotFriends()
+    setNotFriends(notFriends)
+  }
+
+  const fetchFriendRequests = async () => {
+    const { data: friendRequests } = await api.getFriendRequests()
+    setFriendRequests(friendRequests)
+  }
 
   const friendBoxes = friends.map((user) => (
-    <FriendBox key={user.id} user={user} />
+    <FriendBox
+      key={user.id}
+      user={user}
+      friends={friends}
+      setFriends={setFriends}
+      notFriends={notFriends}
+      setNotFriends={setNotFriends}
+    />
+  ))
+
+  const notFriendsBoxes = notFriends.map((user) => (
+    <NotFriendBox
+      key={user.id}
+      user={user}
+      notFriends={notFriends}
+      setNotFriends={setNotFriends}
+      friendRequests={friendRequests}
+      setFriendRequests={setFriendRequests}
+    />
+  ))
+
+  const friendRequestBoxes = friendRequests.map((user) => (
+    <RequestBox
+      key={user.id}
+      user={user}
+      friendRequests={friendRequests}
+      setFriendRequests={setFriendRequests}
+      friends={friends}
+      setFriends={setFriends}
+      notFriends={notFriends}
+      setNotFriends={setNotFriends}
+    />
   ))
 
   return (
     <aside className="aside">
       <div className="box">
+        <p className="box-title">Friends</p>
+        <div className="scroll"> {friendBoxes}</div>
+      </div>
+      <div className="box">
         <p className="box-title">Users</p>
-        <input className="input" placeholder="Search" />
-        <div className="scroll">{searchBoxes}</div>
+        {/* <input className="input" placeholder="Search" /> */}
+        <div className="scroll">{notFriendsBoxes}</div>
       </div>
       <div className="box">
         <p className="box-title">Requests</p>
-        <div className="scroll">{requestBoxes}</div>
-      </div>
-      <div className="box">
-        <p className="box-title">Friends</p>
-        <div className="scroll"> {friendBoxes}</div>
+        <div className="scroll">{friendRequestBoxes}</div>
       </div>
     </aside>
   )

@@ -1,4 +1,4 @@
-export const getUserAvatar = (name) => {
-  return `https://avatars.dicebear.com/api/avataaars/${name}.svg
+export const getUserAvatar = (user) => {
+  return `https://avatars.dicebear.com/api/avataaars/${user.email}.svg
   `
 }
