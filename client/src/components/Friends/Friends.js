@@ -4,6 +4,7 @@ import RequestBox from './RequestBox'
 import FriendBox from './FriendBox'
 import { useEffect, useState } from 'react'
 import * as api from '../../api'
+
 const Friends = () => {
   const [friends, setFriends] = useState([])
   const [notFriends, setNotFriends] = useState([])
@@ -66,20 +67,32 @@ const Friends = () => {
   ))
 
   return (
-    <aside className="aside">
-      <div className="box">
-        <p className="box-title">Friends</p>
-        <div className="scroll"> {friendBoxes}</div>
-      </div>
-      <div className="box">
-        <p className="box-title">Users</p>
-        {/* <input className="input" placeholder="Search" /> */}
-        <div className="scroll">{notFriendsBoxes}</div>
-      </div>
-      <div className="box">
-        <p className="box-title">Requests</p>
-        <div className="scroll">{friendRequestBoxes}</div>
-      </div>
+    <aside className="aside ">
+      {friends.length > 0 ? (
+        <div className="box scroll-container">
+          <p className="box-title">Friends</p>
+          <div className="scroll"> {friendBoxes}</div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {notFriends.length > 0 ? (
+        <div className="box scroll-container">
+          <p className="box-title">Add friend</p>
+          {/* <input className="input" placeholder="Search" /> */}
+          <div className="scroll">{notFriendsBoxes}</div>
+        </div>
+      ) : (
+        <></>
+      )}
+      {friendRequests.length > 0 ? (
+        <div className="box scroll-container">
+          <p className="box-title">Friend requests</p>
+          <div className="scroll">{friendRequestBoxes}</div>
+        </div>
+      ) : (
+        <></>
+      )}
     </aside>
   )
 }
