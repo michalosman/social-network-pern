@@ -2,7 +2,7 @@ import { User } from '../models/User'
 import ApiError from '../error/ApiError'
 import 'express-async-errors'
 import { Request, Response } from 'express'
-import { getRepository } from 'typeorm'
+import { getRepository, Not } from 'typeorm'
 import { Friend } from '../models/Friend'
 import { removeSensitiveData } from '../utils/functions'
 
@@ -51,8 +51,14 @@ export const getNotFriends = async (req: Request, res: Response) => {
     .innerJoinAndSelect('f.sender', 'sender')
     .innerJoinAndSelect('f.receiver', 'receiver')
     .where(':userId IN (f.senderId, f.receiverId)', { userId: user.id })
-    .andWhere('f.isApproved = true')
     .getMany()
+
+  if (friendships.length === 0) {
+    const users = await User.find({
+      where: { role: 'user', id: Not(user.id) },
+    })
+    return res.status(200).json(users)
+  }
 
   const friendsIds = friendships.map((friendship) =>
     friendship.senderId === user.id
@@ -64,6 +70,7 @@ export const getNotFriends = async (req: Request, res: Response) => {
     .createQueryBuilder('users')
     .where('users.id NOT IN (:...friendsIds)', { friendsIds })
     .andWhere("users.role = 'user'")
+    .andWhere('users.id != :userId', { userId: user.id })
     .getMany()
 
   const notFriendsData = notFriends.map((user) => removeSensitiveData(user))
