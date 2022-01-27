@@ -133,6 +133,8 @@
 }
 
 .comment-cloud {
+  max-width: 40vw;
+  word-wrap: break-word;
   padding: var(--spacing-sm);
   background-color: var(--grey);
   border-radius: var(--border-radius);
@@ -152,8 +154,12 @@
   font-size: 12px;
 }
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
   .author-name {
     max-width: 160px;
+  }
+
+  .comment-cloud {
+    max-width: 60vw;
   }
 }
