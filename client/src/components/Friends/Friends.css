@@ -17,11 +17,6 @@
   margin-bottom: var(--spacing-md);
 }
 
-.scroll {
-  max-height: 200px;
-  overflow-y: scroll;
-}
-
 .user-box {
   display: flex;
   align-items: center;
@@ -60,23 +55,4 @@
   .aside {
     min-width: 250px;
   }
-}
-
-.aside ::-webkit-scrollbar {
-  width: 10px;
-}
-
-.aside ::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-.aside ::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-  width: 10px;
-  min-height: 60px;
-  background-color: var(--grey);
-}
-
-.aside ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--grey-hover);
 }

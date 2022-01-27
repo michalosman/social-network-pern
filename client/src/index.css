@@ -79,3 +79,27 @@ input {
   background-color: var(--white);
   box-shadow: var(--shadow);
 }
+
+.scroll {
+  max-height: 220px;
+  overflow-y: scroll;
+}
+
+.scroll-container ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-container ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.scroll-container ::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  width: 10px;
+  min-height: 60px;
+  background-color: var(--grey);
+}
+
+.scroll-container ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grey-hover);
+}
