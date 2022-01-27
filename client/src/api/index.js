@@ -24,8 +24,7 @@ API.interceptors.request.use((req) => {
 // Users
 export const signUp = (newUserData) => API.post('/users/sign-up', newUserData)
 export const signIn = (userData) => API.post('/users/sign-in', userData)
-export const validateRole = (userData) =>
-  API.post('/users/validate-role', userData)
+export const verifyUser = (userData) => API.post('/users/verify-user', userData)
 export const warnUser = (userId) => API.put(`/users/warn/${userId}`)
 export const blockUser = (userId) => API.put(`/users/block/${userId}`)
 
@@ -43,7 +42,9 @@ export const removeFriend = (userId) => API.delete(`/friends/remove/${userId}`)
 
 // Posts
 export const getPosts = () => API.get('/posts')
-export const createPost = (text) => API.post('/posts')
-export const addComment = (postId) => API.get(`/posts/add-comment/${postId}`)
+export const getFriendsPosts = () => API.get('/posts/friends')
+export const createPost = (text) => API.post('/posts', { text })
+export const addComment = (postId, text) =>
+  API.get(`/posts/add-comment/${postId}`, { text })
 export const likePost = (postId) => API.get(`/posts/like/${postId}`)
 export const unlikePost = (postId) => API.get(`/posts/unlike/${postId}`)

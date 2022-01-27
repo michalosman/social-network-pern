@@ -62,7 +62,7 @@ const Home = () => {
       </header>
       <div className="container">
         {isPostsOpen ? <Posts /> : <></>}
-        {isFriendsOpen ? <Friends /> : <></>}
+        {isFriendsOpen && user.role === 'user' ? <Friends /> : <></>}
       </div>
       <footer className="footer">Copyright © 2022 Michał Osman</footer>
     </>

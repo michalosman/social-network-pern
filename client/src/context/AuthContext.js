@@ -17,13 +17,17 @@ const AuthProvider = ({ children }) => {
   }
 
   const signIn = async (userData) => {
-    console.log(userData)
     const { data: user } = await api.signIn(userData)
-    console.log(user)
 
     if (user.token) {
       localStorage.setItem('userData', JSON.stringify(user))
       setUser(user)
+    }
+
+    if (user.isBlocked) {
+      localStorage.clear()
+      setUser(null)
+      alert('Account is blocked')
     }
   }
 

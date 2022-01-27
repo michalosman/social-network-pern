@@ -5,6 +5,7 @@ import { Comment } from '../models/Comment'
 import 'express-async-errors'
 import { getRepository } from 'typeorm'
 import { removeSensitiveDataPost } from '../utils/functions'
+import { Friend } from '../models/Friend'
 
 export const createPost = async (req: Request, res: Response) => {
   const { text } = req.body
@@ -31,6 +32,38 @@ export const getPosts = async (req: Request, res: Response) => {
   const postsData = posts.map((post) => removeSensitiveDataPost(post))
 
   return res.status(200).json(postsData)
+}
+
+export const getFriendsPosts = async (req: Request, res: Response) => {
+  const user = req.user
+
+  const friendships = await getRepository(Friend)
+    .createQueryBuilder('f')
+    .innerJoinAndSelect('f.sender', 'sender')
+    .innerJoinAndSelect('f.receiver', 'receiver')
+    .where(':userId IN (f.senderId, f.receiverId)', { userId: user.id })
+    .andWhere('f.isApproved = true')
+    .getMany()
+
+  const friendsIds = friendships.map((friendship) =>
+    friendship.senderId === user.id
+      ? friendship.receiverId
+      : friendship.senderId
+  )
+
+  const friendsPosts = await getRepository(Post)
+    .createQueryBuilder('posts')
+    .innerJoinAndSelect('posts.author', 'author')
+    .where('author.id IN (:...friendsIds)', {
+      friendsIds: [...friendsIds, user.id],
+    })
+    .getMany()
+
+  const friendsPostsData = friendsPosts.map((post) =>
+    removeSensitiveDataPost(post)
+  )
+
+  return res.status(200).json(friendsPostsData)
 }
 
 export const addComment = async (req: Request, res: Response) => {

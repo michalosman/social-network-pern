@@ -27,7 +27,7 @@ const useAuth = () => {
 
   const verifyUser = async (userData) => {
     try {
-      const { data } = await api.validateRole(userData)
+      const { data } = await api.verifyUser(userData)
       return data.isValid
     } catch (error) {
       console.log('Provided credentials are incorrect')

@@ -20,7 +20,7 @@ export const getUsers = async (req: Request, res: Response) => {
   res.status(200).json(usersData)
 }
 
-export const validateRole = (req: Request, res: Response) => {
+export const verifyUser = (req: Request, res: Response) => {
   res.status(200).json({ isValid: req.body.role === req.user.role })
 }
 
