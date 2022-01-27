@@ -48,3 +48,4 @@ export const addComment = (postId, text) =>
   API.post(`/posts/add-comment/${postId}`, { text })
 export const likePost = (postId) => API.put(`/posts/like/${postId}`)
 export const unlikePost = (postId) => API.put(`/posts/unlike/${postId}`)
+export const removePost = (postId) => API.delete(`/posts/${postId}`)

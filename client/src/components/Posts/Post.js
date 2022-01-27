@@ -18,6 +18,11 @@ const Post = ({ post, posts, setPosts }) => {
     await api.blockUser(user.id)
   }
 
+  const handleRemovePost = async (post) => {
+    await api.removePost(post.id)
+    setPosts(posts.filter((oldPost) => oldPost.id !== post.id))
+  }
+
   const handleLikePost = async () => {
     await api.likePost(post.id)
     setPosts(
@@ -57,26 +62,38 @@ const Post = ({ post, posts, setPosts }) => {
           <div className="author-name">{`${post.author.firstName} ${post.author.lastName}`}</div>
           <div className="time-info">{moment(post.createdAt).fromNow()}</div>
         </div>
-        {user.role === 'moderator' ? (
-          <button
-            className="transparent-button options-button"
-            onClick={() => handleWarnUser(post.author)}
-          >
-            <i className="fas fa-exclamation"></i>
-          </button>
-        ) : (
-          <></>
-        )}
-        {user.role === 'admin' ? (
-          <button
-            className="transparent-button options-button"
-            onClick={() => handleBlockUser(post.author)}
-          >
-            <i className="fas fa-ban"></i>
-          </button>
-        ) : (
-          <></>
-        )}
+        <div className="options-buttons">
+          {user.role === 'moderator' ? (
+            <button
+              className="transparent-button options-button"
+              onClick={() => handleWarnUser(post.author)}
+            >
+              <i className="fas fa-exclamation"></i>
+            </button>
+          ) : (
+            <></>
+          )}
+          {user.role === 'admin' ? (
+            <button
+              className="transparent-button options-button"
+              onClick={() => handleBlockUser(post.author)}
+            >
+              <i className="fas fa-ban"></i>
+            </button>
+          ) : (
+            <></>
+          )}
+          {user.role !== 'user' ? (
+            <button
+              className="transparent-button options-button"
+              onClick={() => handleRemovePost(post)}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          ) : (
+            <></>
+          )}
+        </div>
       </div>
       <div className="post-text">{post.text}</div>
       <div className="post-statistics">

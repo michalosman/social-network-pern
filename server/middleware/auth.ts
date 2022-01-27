@@ -44,3 +44,10 @@ export const authAdmin = (req: Request, res: Response, next: NextFunction) => {
 
   next()
 }
+
+export const authAdminModerator = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user.role === UserRole.USER)
+    throw ApiError.forbidden('Access denied (admin & mod only)')
+
+  next()
+}

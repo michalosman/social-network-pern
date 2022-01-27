@@ -20,7 +20,7 @@ export const createPost = async (req: Request, res: Response) => {
 
   const newPostData = removeSensitiveDataPost(newPost)
 
-  return res.status(200).json(newPostData)
+  res.status(200).json(newPostData)
 }
 
 export const getPosts = async (req: Request, res: Response) => {
@@ -34,7 +34,7 @@ export const getPosts = async (req: Request, res: Response) => {
 
   const postsData = posts.map((post) => removeSensitiveDataPost(post))
 
-  return res.status(200).json(postsData)
+  res.status(200).json(postsData)
 }
 
 export const getFriendsPosts = async (req: Request, res: Response) => {
@@ -69,7 +69,7 @@ export const getFriendsPosts = async (req: Request, res: Response) => {
     removeSensitiveDataPost(post)
   )
 
-  return res.status(200).json(friendsPostsData)
+  res.status(200).json(friendsPostsData)
 }
 
 export const addComment = async (req: Request, res: Response) => {
@@ -91,7 +91,7 @@ export const addComment = async (req: Request, res: Response) => {
 
   const newCommentData = removeSensitiveDataPost(newComment)
 
-  return res.status(200).json({
+  res.status(200).json({
     id: newCommentData.id,
     text: newCommentData.text,
     createdAt: newCommentData.createdAt,
@@ -119,7 +119,7 @@ export const likePost = async (req: Request, res: Response) => {
   post.likes = [...post.likes, user]
   await post.save()
 
-  return res.status(200).json({ likes: post.likes.length })
+  res.status(200).json({ likes: post.likes.length })
 }
 
 export const unlikePost = async (req: Request, res: Response) => {
@@ -142,5 +142,19 @@ export const unlikePost = async (req: Request, res: Response) => {
   post.likes = post.likes.filter((likeUser) => likeUser.id !== user.id)
   await post.save()
 
-  return res.status(200).json({ likes: post.likes.length })
+  res.status(200).json({ likes: post.likes.length })
+}
+
+export const deletePost = async (req: Request, res: Response) => {
+  const { postId } = req.params
+
+  if (!parseInt(postId)) throw ApiError.badRequest('Invalid post id')
+
+  const post = await Post.findOne(postId)
+
+  if (!post) throw ApiError.notFound('Post not found')
+
+  await post.remove()
+
+  res.status(200).json({ message: 'Post removed succesfully' })
 }

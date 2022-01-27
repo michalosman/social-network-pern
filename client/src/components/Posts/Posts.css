@@ -77,6 +77,10 @@
   font-weight: 400;
 }
 
+.options-buttons {
+  display: flex;
+}
+
 .options-button {
   display: flex;
   align-items: center;
@@ -84,7 +88,10 @@
   border-radius: 50px;
   width: 36px;
   height: 36px;
-  font-size: 16px;
+}
+
+.options-button i {
+  margin: 0;
 }
 
 .transparent-button {
