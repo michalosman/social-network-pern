@@ -1,18 +1,19 @@
 import './Posts.css'
 import { useContext, useEffect, useState } from 'react'
 import { getUserAvatar } from '../../utils/functions'
-import moment from 'moment'
 import * as api from '../../api'
 import { AuthContext } from '../../context/AuthContext'
+import Post from './Post'
 
 const Posts = () => {
-  const [posts, setPosts] = useState([])
   const { user } = useContext(AuthContext)
+  const [posts, setPosts] = useState([])
   const [text, setText] = useState('')
 
   useEffect(() => {
     if (user.role === 'user') fetchFriendsPosts()
     else fetchPosts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchPosts = async () => {
@@ -32,51 +33,10 @@ const Posts = () => {
     setText('')
   }
 
-  const handleWarnUser = async (user) => {
-    await api.warnUser(user.id)
-  }
-
-  const handleBlockUser = async (user) => {
-    await api.blockUser(user.id)
-  }
-
   const postsBoxes = posts
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .map((post) => (
-      <div key={post.id} className="box">
-        <div className="post-panel">
-          <img
-            className="avatar"
-            src={getUserAvatar(post.author)}
-            alt="author avatar"
-          />
-          <div className="post-info">
-            <div className="author-name">{`${post.author.firstName} ${post.author.lastName}`}</div>
-            <div className="time-info">{moment(post.createdAt).fromNow()}</div>
-          </div>
-          {user.role === 'moderator' ? (
-            <button
-              className="options-button"
-              onClick={() => handleWarnUser(post.author)}
-            >
-              <i class="fas fa-exclamation"></i>
-            </button>
-          ) : (
-            <></>
-          )}
-          {user.role === 'admin' ? (
-            <button
-              className="options-button"
-              onClick={() => handleBlockUser(post.author)}
-            >
-              <i class="fas fa-ban"></i>
-            </button>
-          ) : (
-            <></>
-          )}
-        </div>
-        <div className="post-text">{post.text}</div>
-      </div>
+      <Post key={post.id} post={post} posts={posts} setPosts={setPosts} />
     ))
 
   return (

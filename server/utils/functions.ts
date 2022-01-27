@@ -1,4 +1,9 @@
 export const removeSensitiveDataPost = (data: any) => {
+  const likes = data.likes?.map((like: any) => like.id)
+  const comments = data.comments?.map((comment: any) => {
+    return { ...comment, author: removeSensitiveData(comment.author) }
+  })
+
   return {
     ...data,
     author: {
@@ -7,6 +12,8 @@ export const removeSensitiveDataPost = (data: any) => {
       firstName: data.author.firstName,
       lastName: data.author.lastName,
     },
+    likes: likes ? likes : [],
+    comments: comments ? comments : [],
   }
 }
 
