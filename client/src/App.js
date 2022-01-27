@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Home from './components/Home/Home'
-import { user } from './assets/dummy_data'
 import Login from './components/Login/Login'
+import { AuthContext } from './context/AuthContext'
 
 const App = () => {
+  const { user } = useContext(AuthContext)
+
   if (!user) return <Login />
   return <Home />
 }
