@@ -27,6 +27,9 @@ export const getPosts = async (req: Request, res: Response) => {
   const posts = await getRepository(Post)
     .createQueryBuilder('posts')
     .innerJoinAndSelect('posts.author', 'author')
+    .leftJoinAndSelect('posts.likes', 'likes')
+    .leftJoinAndSelect('posts.comments', 'comments')
+    .leftJoinAndSelect('comments.author', 'commentAuthors')
     .getMany()
 
   const postsData = posts.map((post) => removeSensitiveDataPost(post))
@@ -54,6 +57,9 @@ export const getFriendsPosts = async (req: Request, res: Response) => {
   const friendsPosts = await getRepository(Post)
     .createQueryBuilder('posts')
     .innerJoinAndSelect('posts.author', 'author')
+    .leftJoinAndSelect('posts.likes', 'likes')
+    .leftJoinAndSelect('posts.comments', 'comments')
+    .leftJoinAndSelect('comments.author', 'commentAuthors')
     .where('author.id IN (:...friendsIds)', {
       friendsIds: [...friendsIds, user.id],
     })
@@ -85,7 +91,12 @@ export const addComment = async (req: Request, res: Response) => {
 
   const newCommentData = removeSensitiveDataPost(newComment)
 
-  return res.status(200).json(newCommentData)
+  return res.status(200).json({
+    id: newCommentData.id,
+    text: newCommentData.text,
+    createdAt: newCommentData.createdAt,
+    author: newCommentData.author,
+  })
 }
 
 export const likePost = async (req: Request, res: Response) => {
