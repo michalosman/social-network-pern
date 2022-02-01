@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { getUserAvatar } from '../../utils/functions'
 import moment from 'moment'
 import * as api from '../../api'
+import './Comments.css'
 
 const Comments = ({ post, posts, setPosts }) => {
   const [text, setText] = useState('')

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import Home from './components/Home/Home'
-import Login from './components/Login/Login'
+import Home from './pages/Home'
+import Login from './pages/Login'
 import { AuthContext } from './context/AuthContext'
 
 const App = () => {

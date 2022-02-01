@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { getUserAvatar } from '../../utils/functions'
 import * as api from '../../api'
 import { AuthContext } from '../../context/AuthContext'
-import Post from './Post'
+import Post from '../Post'
 
 const Posts = () => {
   const { user } = useContext(AuthContext)

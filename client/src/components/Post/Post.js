@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../context/AuthContext'
-import './Posts.css'
 import { getUserAvatar } from '../../utils/functions'
 import moment from 'moment'
 import * as api from '../../api'
-import Comments from './Comments'
+import Comments from '../Comments'
+import './Post.css'
 
 const Post = ({ post, posts, setPosts }) => {
   const { user } = useContext(AuthContext)

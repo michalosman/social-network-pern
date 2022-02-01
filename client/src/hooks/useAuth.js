@@ -1,5 +1,3 @@
-// This hook handles auto sign in
-
 import decode from 'jwt-decode'
 import { useEffect, useState } from 'react'
 import * as api from '../api'
