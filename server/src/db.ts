@@ -1,9 +1,9 @@
 import { createConnection } from 'typeorm'
 import dotenv from 'dotenv'
-import { User } from './models/User'
-import { Post } from './models/Post'
-import { Comment } from './models/Comment'
-import { Friend } from './models/Friend'
+import User from './models/User'
+import Post from './models/Post'
+import Comment from './models/Comment'
+import Friend from './models/Friend'
 
 dotenv.config()
 

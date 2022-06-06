@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
 import React, { useContext, useState } from 'react'
 import moment from 'moment'
 import { AuthContext } from '../../context/AuthContext'
@@ -95,12 +98,12 @@ const Post = ({ post, posts, setPosts }) => {
           <i className="fas fa-thumbs-up" />
           {post.likes.length}
         </div>
-        <button
+        <div
           className="comments-button"
           onClick={() => setCommentsOpen(!commentsOpen)}
         >
           {`${post.comments.length} comments`}
-        </button>
+        </div>
       </div>
       <div className="post-buttons">
         {!post.likes.find((userId) => userId === user.id) ? (
