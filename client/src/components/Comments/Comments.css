@@ -8,6 +8,7 @@
   gap: var(--spacing-sm);
   font-weight: 400;
   margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
 }
 
 .comment-cloud {

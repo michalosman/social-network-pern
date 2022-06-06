@@ -15,6 +15,7 @@ API.interceptors.request.use((req) => {
 
     if (decodedToken.exp * 1000 < new Date().getTime()) {
       window.location.reload(false)
+      // eslint-disable-next-line no-alert
       alert('Your token expired, please sign in again')
     }
   }

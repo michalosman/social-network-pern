@@ -28,7 +28,9 @@ const useAuth = () => {
       const { data } = await api.verifyUser(userData)
       return data.isValid
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Provided credentials are incorrect')
+      return false
     }
   }
 
